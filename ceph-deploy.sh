@@ -23,7 +23,7 @@ auth_service_required = cephx
 auth_client_required = cephx
 EOF
 
-# 在各个节点上安装ceph, 并指定了外网的ceph yum源, 如果无法访问外面请自行搭建并修改
+# 在各个节点上安装ceph, 并指定了外网的ceph yum源, 如果无法访问外网请自行搭建并修改
 ceph-deploy install storage-ha-1 storage-ha-2 storage-ha-3 --repo-url http://mirrors.ustc.edu.cn/ceph/rpm-mimic/el7 --gpg-url 'http://mirrors.ustc.edu.cn/ceph/keys/release.asc'
 # 初始化mon服务和key信息
 ceph-deploy mon create-initial

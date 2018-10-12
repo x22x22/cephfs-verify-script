@@ -30,7 +30,7 @@ echo 'fullstackmemo***' | passwd --stdin storage
 echo "storage ALL = (root) NOPASSWD:ALL" | tee /etc/sudoers.d/storage
 chmod 0440 /etc/sudoers.d/storage
 
-# 添加ceph的yum源, 如果无法访问外面请自行搭建并修改
+# 添加ceph的yum源, 如果无法访问外网请自行搭建并修改
 cat >/etc/yum.repos.d/ceph.repo <<'EOF'
 [Ceph]
 name=Ceph packages for $basearch
@@ -63,7 +63,7 @@ EOF
 
 mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
 
-# 修改CentOS的yum基础源, 如果无法访问外面请自行搭建并修改
+# 修改CentOS的yum基础源, 如果无法访问外网请自行搭建并修改
 cat >/etc/yum.repos.d/CentOS-Base.repo <<'EOF'
 # CentOS-Base.repo
 #
@@ -114,7 +114,7 @@ yum makecache fast
 # 安装CentOS的yum epel源
 yum install -y epel-release
 
-# 修改CentOS的yum epel源, 如果无法访问外面请自行搭建并修改
+# 修改CentOS的yum epel源, 如果无法访问外网请自行搭建并修改
 cat >/etc/yum.repos.d/epel.repo <<'EOF'
 [epel]
 name=Extra Packages for Enterprise Linux 7 - $basearch
@@ -148,7 +148,7 @@ yum makecache
 yum install yum-plugin-priorities chrony -y
 mv /etc/chrony.conf /etc/chrony.conf.bk
 
-# 添加时间同步服务器, 如果无法访问外面请自行搭建并修改
+# 添加时间同步服务器, 如果无法访问外网请自行搭建并修改
 cat > /etc/chrony.conf << EOF
 server 0.cn.pool.ntp.org iburst
 server 1.cn.pool.ntp.org iburst
