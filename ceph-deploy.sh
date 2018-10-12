@@ -39,22 +39,24 @@ ceph-deploy osd create --data /dev/sdb storage-ha-3
 
 ceph-deploy mds create storage-ha-1 storage-ha-2 storage-ha-3
 
+ssh storage@storage-ha-1 << EOF
 # 创建两个pool, 服务于cephfs, cephfs至少需要两个pool, 分别做metadata和data
-ceph osd pool create cephfs_data 100
+sudo ceph osd pool create cephfs_data 100
 # 使用raid 5方式存储数据即erasure类型, 当单个文件平均大小大于8k时erasure比replicated有优势.
-# ceph osd pool create cephfs_data 100 100 erasure
-# ceph osd pool set cephfs_data allow_ec_overwrites true
-# metadata pool必须使用replicated类型.
-ceph osd pool create cephfs_metadata 100
+# sudo ceph osd pool create cephfs_data 100 100 erasure
+# sudo ceph osd pool set cephfs_data allow_ec_overwrites true
+# sudo metadata pool必须使用replicated类型.
+sudo ceph osd pool create cephfs_metadata 100
 # 如果使用了erasure类型, 此步骤跳过
-ceph osd pool set cephfs_data size 3
+sudo ceph osd pool set cephfs_data size 3
 
-ceph osd pool set cephfs_metadata size 3
-ceph fs new cephfs cephfs_metadata cephfs_data
+sudo ceph osd pool set cephfs_metadata size 3
+sudo ceph fs new cephfs cephfs_metadata cephfs_data
 
 # 查看集群各项信息
-ceph quorum_status --format json-pretty
-ceph fs ls
-ceph mds stat
-ceph health
-ceph -s
+sudo ceph quorum_status --format json-pretty
+sudo ceph fs ls
+sudo ceph mds stat
+sudo ceph health
+sudo ceph -s
+EOF
