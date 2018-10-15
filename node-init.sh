@@ -1,9 +1,10 @@
 #!/bin/bash
 
-# 禁用ipv6
+# 禁用ipv6, 加大pid限制
 cat >>/etc/sysctl.conf <<EOF
 net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
+kernel.pid_max = 4194303
 EOF
 
 sysctl -p
@@ -149,6 +150,7 @@ yum install yum-plugin-priorities chrony -y
 mv /etc/chrony.conf /etc/chrony.conf.bk
 
 # 添加时间同步服务器, 如果无法访问外网请自行搭建并修改
+# 添加时间同步服务器, 如果无法访问外网请更换成yum.yfb.sunline.cn和nexus.yfb.sunline.cn
 cat > /etc/chrony.conf << EOF
 server 0.cn.pool.ntp.org iburst
 server 1.cn.pool.ntp.org iburst
@@ -162,4 +164,12 @@ EOF
 
 systemctl enable chronyd
 systemctl restart chronyd
+chronyc activity
+sleep 5
 chronyc sources -v
+hwclock -w
+
+# 这里将/dev/sdb作为ceph的存储池, 所以先格式化/dev/sdb, 请根据自己实际情况修改
+parted -s /dev/sdb mklabel gpt mkpart primary xfs 0% 100%
+partprobe /dev/sdb
+mkfs.xfs /dev/sdb -f

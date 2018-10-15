@@ -16,11 +16,12 @@ osd pool default pgp num = 100
 # 'mon allow pool delete': 
 # 此设置允许删除pool的操作, poc环境为方便操作加上此选项, 生产环境建议注释
 mon allow pool delete = true
-osd crush chooseleaf type = 2
+# osd crush chooseleaf type = 2
 
-auth_cluster_required = cephx
-auth_service_required = cephx
-auth_client_required = cephx
+[osd]
+osd_max_backfills = 1
+osd_recovery_max_active = 1
+osd_recovery_op_priority = 1
 EOF
 
 # 在各个节点上安装ceph, 并指定了外网的ceph yum源, 如果无法访问外网请自行搭建并修改

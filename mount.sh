@@ -4,12 +4,12 @@
 yum install ceph -y
 mkdir -p /etc/ceph
 mkdir -p /mnt/mycephfs
-# 以下写入的secret请按实际情况修改
+# 以下写入的secret请根据'获取用户授权信息'章节中获取到的'key'进行修改
 cat > /etc/ceph/admin_secret.key << EOF
 AQAm4L5b60alLhAARxAgr9jQDLopr9fbXfm87w==
 EOF
 
-# 以下写入的secret请按实际情况修改
+# 以下写入的secret请根据'获取用户授权信息'章节中获取到的'key'进行修改
 cat > /etc/ceph/test_cephfs_1_secret.key << EOF
 AQA0Cr9b9afRDBAACJ0M8HxsP41XmLhbSxWkqA==
 EOF
@@ -33,7 +33,7 @@ mkdir -p /mnt/mycephfs
 
 scp storage@storage-ha-1:/etc/ceph/ceph.conf /etc/ceph/ceph.conf
 
-# 以下写入的内容请按实际情况修改, 可以通过ceph auth get client.admin和ceph auth get client.fs-test-1命令获取
+# 以下写入的secret请根据'获取用户授权信息'章节中获取到的'key'进行修改
 cat > /etc/ceph/ceph.keyring << EOF
 [client.admin]
         key = AQAm4L5b60alLhAARxAgr9jQDLopr9fbXfm87w==

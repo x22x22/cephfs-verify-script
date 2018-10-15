@@ -156,7 +156,10 @@ EOF
 
 systemctl enable chronyd
 systemctl restart chronyd
+chronyc activity
+sleep 5
 chronyc sources -v
+hwclock -w
 
 rm -f "${HOME}"/.ssh/ceph_id_rsa
 ssh-keygen -t rsa -b 4096 -f "${HOME}"/.ssh/ceph_id_rsa -N ''
