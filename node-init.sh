@@ -146,7 +146,7 @@ gpgcheck=1
 EOF
 
 yum makecache
-yum install yum-plugin-priorities chrony -y
+yum install yum-plugin-priorities chrony parted xfsprogs -y
 mv /etc/chrony.conf /etc/chrony.conf.bk
 
 # 添加时间同步服务器, 如果无法访问外网请自行搭建并修改

@@ -14,7 +14,7 @@ cat > /etc/ceph/test_cephfs_1_secret.key << EOF
 AQA0Cr9b9afRDBAACJ0M8HxsP41XmLhbSxWkqA==
 EOF
 
-mount.ceph 192.168.60.111:6789,192.168.60.112:6789,192.168.60.113:6789:/ /mnt/mycephfs -o name=admin,secretfile=/etc/ceph/secret.key
+mount.ceph 192.168.60.111:6789,192.168.60.112:6789,192.168.60.113:6789:/ /mnt/mycephfs -o name=admin,secretfile=/etc/ceph/admin_secret.key
 
 # 使用只读的用户挂载
 mkdir -p /mnt/mycephfs/test_1
@@ -56,4 +56,4 @@ EOF
 # 使用只读的用户挂载
 mkdir -p /mnt/mycephfs/test_1
 mkdir -p /mnt/test_cephfs_1
-mount.ceph 192.168.60.111:6789,192.168.60.112:6789,192.168.60.113:6789:/ /mnt/test_cephfs_1 -o name=fs-test-1,secretfile=/etc/ceph/test_cephfs_1_secret.key
+mount.ceph 192.168.60.111:6789,192.168.60.112:6789,192.168.60.113:6789:/ /mnt/test_cephfs_1 -o name=fs-test-1
