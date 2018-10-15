@@ -152,10 +152,7 @@ mv /etc/chrony.conf /etc/chrony.conf.bk
 # 添加时间同步服务器, 如果无法访问外网请自行搭建并修改
 # 添加时间同步服务器, 如果无法访问外网请更换成yum.yfb.sunline.cn和nexus.yfb.sunline.cn
 cat > /etc/chrony.conf << EOF
-server 0.cn.pool.ntp.org iburst
-server 1.cn.pool.ntp.org iburst
-server 2.cn.pool.ntp.org iburst
-server 3.cn.pool.ntp.org iburst
+server ntp.api.bz iburst
 driftfile /var/lib/chrony/drift
 makestep 1.0 3
 rtcsync
@@ -164,8 +161,8 @@ EOF
 
 systemctl enable chronyd
 systemctl restart chronyd
+sleep 10
 chronyc activity
-sleep 5
 chronyc sources -v
 hwclock -w
 
